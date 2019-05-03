@@ -1,4 +1,6 @@
 Write-Output "`n" # New Line for separation
+$temp = $env:TEMP
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 "{0, 10}: {1}" -f "Timestamp", (Get-Date -Format "yyyy-MM-dd HH:mm tt")
 "{0, 10}: {1}" -f "Computer", $env:COMPUTERNAME
@@ -41,4 +43,5 @@ Set-ItemProperty -Path Registry::HKU\Default_User\SOFTWARE\Microsoft\Windows\Cur
 reg unload HKU\Default_User
 
 #Remove Pinned Suggested Apps
-Import-StartLayout -LayoutPath "DefaultLayout.xml" -MountPath "C:\"
+Invoke-WebRequest "https://gitea.popcornrules.com/POPCORNrules/Windows-10-Cleaner/raw/branch/master/DefaultLayout.xml" -OutFile "$temp\DefaultLayout.xml"
+Import-StartLayout -LayoutPath "$temp\DefaultLayout.xml" -MountPath "C:\"
