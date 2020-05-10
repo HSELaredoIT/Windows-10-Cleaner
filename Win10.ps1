@@ -23,9 +23,9 @@ $AppList = @(
 
 foreach ($App in $AppList) {
 
-    Get-AppxPackage -Name $App | ForEach-Object {"Removing: $($_.PackageFullName)"}
+    Get-AppxPackage -Name $App | ForEach-Object { "Removing: $($_.PackageFullName)" }
     Get-AppxPackage -Name $App | Remove-AppxPackage
-	Get-AppxProvisionedPackage -Online | Where-Object {$_.DisplayName -like $App} | Remove-AppxProvisionedPackage -Online
+    Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -like $App } | Remove-AppxProvisionedPackage -Online
 
 }
 
@@ -43,5 +43,4 @@ Set-ItemProperty -Path Registry::HKU\Default_User\SOFTWARE\Microsoft\Windows\Cur
 reg unload HKU\Default_User
 
 #Remove Pinned Suggested Apps
-Invoke-WebRequest "https://gitea.popcornrules.com/POPCORNrules/Windows-10-Cleaner/raw/branch/master/DefaultLayout.xml" -OutFile "$temp\DefaultLayout.xml"
-Import-StartLayout -LayoutPath "$temp\DefaultLayout.xml" -MountPath "C:\"
+Import-StartLayout -LayoutPath ".\DefaultLayout.xml" -MountPath "C:\"
